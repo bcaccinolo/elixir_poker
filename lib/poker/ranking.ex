@@ -11,7 +11,7 @@ defmodule Poker.Ranking do
   @two_pair        3
   @one_pair        2
   @high_card       1
-  
+
   def evaluate(cards) do
     cards |> Enum.map(&to_tuple/1) |> Enum.sort |> eval
   end
@@ -36,37 +36,47 @@ defmodule Poker.Ranking do
 
   defp to_tuple(%Poker.Deck.Card{rank: rank, suit: suit}), do: {rank, suit}
 
+  # Royal flush
   defp eval([{10, s}, {11, s}, {12, s}, {13, s}, {14, s}]), do: {@royal_flush, nil}
 
+  # Straight flush
   defp eval([{a, s}, {_b, s}, {_c, s}, {_d, s}, {e, s}]) when e - a == 4, do: {@straight_flush, e}
   defp eval([{2, s}, {3, s}, {4, s}, {5, s}, {14, s}]), do: {@straight_flush, 5}
 
+  # Four of a kind
   defp eval([{a, _}, {a, _}, {a, _}, {a, _}, {b, _}]), do: {@four_of_a_kind, {a,b}}
   defp eval([{b, _}, {a, _}, {a, _}, {a, _}, {a, _}]), do: {@four_of_a_kind, {a,b}}
 
+  # full house
   defp eval([{a, _}, {a, _}, {a, _}, {b, _}, {b, _}]), do: {@full_house, {a,b}}
   defp eval([{b, _}, {b, _}, {a, _}, {a, _}, {a, _}]), do: {@full_house, {a,b}}
 
+  # flush
   defp eval([{e, s}, {d, s}, {c, s}, {b, s}, {a, s}]), do: {@flush, {a,b,c,d,e}}
 
+  # straight
   defp eval([{a, _}, {b, _}, {c, _}, {d, _}, {e, _}])
     when a + 1 == b and b + 1 == c and c + 1 == d and d + 1 == e,
     do: {@straight, e}
   defp eval([{2, _}, {3 , _}, {4 , _}, {5 , _}, {14, _}]), do: {@straight, 5}
 
+  # Three of a kind
   defp eval([{a, _}, {a, _}, {a, _}, {c, _}, {b, _}]), do: {@three_of_a_kind, {a,b,c}}
   defp eval([{c, _}, {a, _}, {a, _}, {a, _}, {b, _}]), do: {@three_of_a_kind, {a,b,c}}
   defp eval([{c, _}, {b, _}, {a, _}, {a, _}, {a, _}]), do: {@three_of_a_kind, {a,b,c}}
 
+  # 2 pairs
   defp eval([{b, _}, {b, _}, {a, _}, {a, _}, {c, _}]), do: {@two_pair, {a,b,c}}
   defp eval([{b, _}, {b, _}, {c, _}, {a, _}, {a, _}]), do: {@two_pair, {a,b,c}}
   defp eval([{c, _}, {b, _}, {b, _}, {a, _}, {a, _}]), do: {@two_pair, {a,b,c}}
 
+  # Pair
   defp eval([{a, _}, {a, _}, {d, _}, {c, _}, {b, _}]), do: {@one_pair, {a,b,c,d}}
   defp eval([{d, _}, {a, _}, {a, _}, {c, _}, {b, _}]), do: {@one_pair, {a,b,c,d}}
   defp eval([{d, _}, {c, _}, {a, _}, {a, _}, {b, _}]), do: {@one_pair, {a,b,c,d}}
   defp eval([{d, _}, {c, _}, {b, _}, {a, _}, {a, _}]), do: {@one_pair, {a,b,c,d}}
 
+  # High cards - nothing
   defp eval([{e, _}, {d, _}, {c, _}, {b, _}, {a, _}]), do: {@high_card, {a,b,c,d,e}}
 
   # Ported from the Erlang
