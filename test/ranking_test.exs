@@ -6,8 +6,10 @@ defmodule Poker.RankingTest do
   end
 
   def assert_rank(hand, rank) do
+    IO.puts hand
     cards = cards_from_string(hand)
     actual_rank = Poker.Ranking.evaluate(cards) |> Poker.Ranking.description
+    IO.puts actual_rank
     assert actual_rank == rank, "Expected #{hand} to have rank #{rank}, got #{actual_rank}"
   end
 

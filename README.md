@@ -1,11 +1,21 @@
-# GenPoker
+# ElixirPokerBase
 
-Learning Elixir, by writing a Texas Hold 'Em app.
+**TODO: Add description**
 
-Blog posts:
+## Installation
 
-- http://blog.tokafish.com/playing-poker-with-elixir-part-1/
-- http://blog.tokafish.com/playing-poker-with-elixir-pt-2/
-- http://blog.tokafish.com/playing-poker-with-elixir-pt-3/
-- http://blog.tokafish.com/playing-poker-with-elixir-pt-4/
-- http://blog.tokafish.com/playing-poker-with-elixir-pt-5/
+If [available in Hex](https://hex.pm/docs/publish), the package can be installed
+by adding `elixir_poker_base` to your list of dependencies in `mix.exs`:
+
+```elixir
+def deps do
+  [
+    {:elixir_poker_base, "~> 0.1.0"}
+  ]
+end
+```
+
+Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
+and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
+be found at [https://hexdocs.pm/elixir_poker_base](https://hexdocs.pm/elixir_poker_base).
+
